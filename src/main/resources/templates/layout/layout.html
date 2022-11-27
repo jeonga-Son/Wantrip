@@ -14,11 +14,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <!-- 폰트어썸 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<!--    &lt;!&ndash; 폰트어썸 &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">-->
 
-    <!-- 테일윈드 -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<!--    &lt;!&ndash; 테일윈드 &ndash;&gt;-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
 
     <!-- Css -->
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -48,7 +48,7 @@
                 <li class="nav-item"><a class="item-anchor" href="javascript: document.logoutForm.submit();" sec:authorize="isAuthenticated()">Logout</a></li>
                 <form name="logoutForm" method="POST" th:action="@{/member/logout}" hidden></form>
                 <li class="nav-item"><a class="item-anchor" href="/map">Travel Map</a></li>
-                <li class="nav-item"><a class="item-anchor" href="/wantripStory">Wantrip Story</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/post/list">Wantrip Story</a></li>
                 <li class="nav-item"><a class="item-anchor" href="/store">Store</a></li>
             </ul>
         </div>

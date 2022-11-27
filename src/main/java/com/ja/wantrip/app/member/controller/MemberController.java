@@ -29,13 +29,13 @@ public class MemberController {
             request.getSession().setAttribute("prevPage", uri);
         }
 
-        return "login";
+        return "member/login";
     }
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/join")
     public String showJoin() {
-        return "join";
+        return "member/join";
     }
 
     @PreAuthorize("isAnonymous()")
