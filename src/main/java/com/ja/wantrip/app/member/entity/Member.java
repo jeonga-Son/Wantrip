@@ -24,11 +24,16 @@ import java.util.List;
 public class Member extends BaseEntity {
     @Column(unique = true)
     private String username;
+
     @JsonIgnore
     private String password;
+
     private String email;
+
     private boolean emailVerified;
+
     private long restCash;
+
     private String nickname;
 
     public String getName() {

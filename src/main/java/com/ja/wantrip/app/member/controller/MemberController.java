@@ -1,6 +1,7 @@
 package com.ja.wantrip.app.member.controller;
 
 import com.ja.wantrip.app.base.rq.Rq;
+import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.member.form.JoinForm;
 import com.ja.wantrip.app.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class MemberController {
     public String join(@Valid JoinForm joinForm) {
         memberService.join(joinForm.getUsername(), joinForm.getPassword(), joinForm.getEmail(), joinForm.getNickname());
 
-        return Rq.redirectWithMsg("/member/login", "회원가입이 완료되었습니다.");
+        return Rq.redirectWithMsg("/member/login", "회원가입이 완료되었습니다. " + joinForm.getEmail() + "로 이메일인증코드를 발송하였습니다. 인증 후 로그인해주세요");
     }
 
 }
