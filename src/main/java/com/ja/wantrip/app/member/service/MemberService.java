@@ -1,6 +1,7 @@
 package com.ja.wantrip.app.member.service;
 
 import com.ja.wantrip.app.member.entity.Member;
+import com.ja.wantrip.app.member.exception.AlreadyJoinException;
 import com.ja.wantrip.app.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,9 @@ public class MemberService {
 
     @Transactional
     public Member join(String username, String password, String email, String nickname) {
+        if(memberRepository.findByUsername(username).isPresent()) {
+            throw new AlreadyJoinException();
+        }
 
         Member member = Member.builder()
                 .username(username)

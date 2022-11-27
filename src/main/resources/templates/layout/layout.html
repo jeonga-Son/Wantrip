@@ -47,8 +47,9 @@
                 <li class="nav-item"><a class="item-anchor" href="/member/login" sec:authorize="isAnonymous()">Login</a></li>
                 <li class="nav-item"><a class="item-anchor" href="javascript: document.logoutForm.submit();" sec:authorize="isAuthenticated()">Logout</a></li>
                 <form name="logoutForm" method="POST" th:action="@{/member/logout}" hidden></form>
-                <li class="nav-item"><a class="item-anchor" href="/about.html">About Me</a></li>
-                <li class="nav-item"><a class="item-anchor" href="/portfolio.html">Portfolio</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/map">Travel Map</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/wantripStory">Wantrip Story</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/store">Store</a></li>
             </ul>
         </div>
     </div>
