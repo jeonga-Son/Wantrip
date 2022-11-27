@@ -7,7 +7,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,14 +24,12 @@ import static lombok.AccessLevel.PROTECTED;
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
-
     @CreatedDate
     private LocalDateTime createDate;
-
     @LastModifiedDate
     private LocalDateTime modifyDate;
-
     @Transient // 아래 필드가 DB 필드가 되는 것을 막는다.
     @Builder.Default
     // 이 필드 덕분에 다양한 DTO 클래스를 만들 필요성이 줄어들게 된다.

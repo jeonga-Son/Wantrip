@@ -257,7 +257,7 @@ input:focus {
 }
 
 .login-form .group .button {
-  background: #442416;
+  background: black;
   /*버튼컬러*/
   color: #fff;
   font-size: 1rem;
@@ -267,7 +267,7 @@ input:focus {
 }
 
 .login-form .group .button:hover{
-  background: #29160e;
+  background: gray;
 }
 
 .social-icons {

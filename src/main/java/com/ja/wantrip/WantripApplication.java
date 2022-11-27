@@ -15,5 +15,4 @@ public class WantripApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WantripApplication.class, args);
 	}
-
 }
