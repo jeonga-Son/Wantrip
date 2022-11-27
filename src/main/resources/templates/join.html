@@ -6,9 +6,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="">
       <meta name="author" content="">
-      <title>Wantrip | 로그인</title>
+      <title>Wantrip | 회원가입</title>
       <!-- Css -->
-      <link href="/css/bootstrap.css" rel="stylesheet">
+      <link href="/bootstrap.css" rel="stylesheet">
       <link href="/css/style.css" rel="stylesheet">
       <link href="/css/login.css" rel="stylesheet">
    </head>
@@ -37,15 +37,16 @@
       </nav>
       <section>
          <div class="container">
-            <!--로그인폼-->
+            <!--회원가입폼-->
             <article class="hero">
-               <h2>login</h2>
-               <h3>로그인</h3>
+               <h2>Join</h2>
+               <h3>회원가입</h3>
                <div class="login-wrap">
                   <div class="login-html">
-                     <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">회원</label>
+                     <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">회원가입</label>
                      <div class="login-form">
-                        <div class="sign-in-htm">
+
+                        <div class="sign-up-htm">
                            <div class="group">
                               <label for="user" class="label">아이디</label>
                               <input id="user" type="text" class="input">
@@ -54,25 +55,28 @@
                               <label for="pass" class="label">비밀번호</label>
                               <input id="pass" type="password" class="input" data-type="password">
                            </div>
+
+                        </div>
                            <div class="group">
-                              <input id="check" type="checkbox" class="check" checked>
-                              <label for="check"><span class="icon"></span> 아이디 저장</label>
-                           </div>
-                           <div class="group">
-                              <input type="submit" class="button" style="background-color:black" value="로그인">
+                              <label for="mail" class="label">이메일</label>
+                              <input id="mail" type="email" class="input" data-type="email">
                            </div>
 
+                           <div class="group">
+                              <small><b>4월 3일 07시 이전,</b>비회원으로 주문하셨을 경우,<br>주문번호란에는 이메일 주소를, 비밀번호란에는 핸드폰번호(-제외)를 입력해주세요.<br>(주문 당시 입력한 내용과 동일하게 입력해주셔야 합니다.)</small>
+                           </div>
+                           <div class="group">
+                              <input type="submit" class="button" value="회원가입">
+                           </div>
                            <div class="hr"></div>
                            <div class="foot-lnk">
-                              <a href="#forgot">비밀번호를 잊어버렸나요?</a>
+                              <a class="already">이미 가입되어 있나요?</a>
                            </div>
                         </div>
                      </div>
                   </div>
-               </div>
-
             </article>
-            <!--로그인폼-->
+            <!--회원가입폼-->
          </div>
          </div>
       </section>
