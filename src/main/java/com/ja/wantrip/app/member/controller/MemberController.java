@@ -29,13 +29,13 @@ public class MemberController {
             request.getSession().setAttribute("prevPage", uri);
         }
 
-        return "login";
+        return "member/login";
     }
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/join")
     public String showJoin() {
-        return "join";
+        return "member/join";
     }
 
     @PreAuthorize("isAnonymous()")
@@ -44,6 +44,12 @@ public class MemberController {
         memberService.join(joinForm.getUsername(), joinForm.getPassword(), joinForm.getEmail(), joinForm.getNickname());
 
         return Rq.redirectWithMsg("/member/login", "회원가입이 완료되었습니다. " + joinForm.getEmail() + "로 이메일인증코드를 발송하였습니다. 인증 후 로그인해주세요");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile")
+    public String showProfile() {
+        return "member/profile";
     }
 
 }
