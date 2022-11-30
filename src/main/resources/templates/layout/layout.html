@@ -36,12 +36,12 @@
             </button>
         </div>
         <a class="navbar-brand" href="/">
-            <img class="logo" src="/img/logo.png" alt="logo">
+            <img class="logo" src="/img/logo.png" alt="WANTRIP">
         </a>
         <div class="nav-content hideNav hidden">
             <ul class="nav-list vcenter">
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="item-anchor" href="/">"[[${@rq.member.name}]]" MyPage </a>
+                    <a class="item-anchor" href="/member/profile">"[[${@rq.member.name}]]" MyPage </a>
                 </li>
                 <li class="nav-item"><a class="item-anchor" href="/">Home</a></li>
                 <li class="nav-item"><a class="item-anchor" href="/member/login" sec:authorize="isAnonymous()">Login</a></li>
