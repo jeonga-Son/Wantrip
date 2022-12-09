@@ -524,3 +524,72 @@ a:visited {
     height: 100vh!important;
     object-fit: cover;
 }
+
+.main-footer {
+  margin: 7rem 0;
+  padding-top: 5rem;
+  border-top: 1px solid #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-footer > nav ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.main-footer > nav ul li {
+  margin-bottom: 1rem;
+}
+
+.main-footer > nav ul li a {
+  color: grey;
+  font-size: 1.2rem;
+  &:hover {
+    color: darken(grey, 50%);
+  }
+}
+
+.main-footer h3 {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 425px) {
+  .slide img {
+    display: none;
+  }
+  .slide .left {
+    width: 100%;
+  }
+  .main-footer {
+    display: flex;
+    flex-direction: column;
+  }
+  .shop-item .title h3 {
+    font-size: 1.5rem;
+  }
+
+  .shop-item .price span {
+    font-size: 1.5rem;
+  }
+
+  .main-footer > nav ul li a {
+    background: #f1f1f1;
+    display: block;
+    padding: 1.5rem;
+    color: grey;
+    font-size: 1.5rem;
+    &:hover {
+      color: grey;
+    }
+  }
+
+  .main-footer h3 {
+    font-size: 1.5rem;
+  }
+  .slide .description {
+    width: 100%
+  }
+}

@@ -1,137 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html layout:decorate="~{/layout/layout}">
 <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="">
-   <meta name="author" content="">
    <title>Wantrip | 쇼핑몰</title>
    <!-- Css -->
-   <link href="/css/bootstrap.css" rel="stylesheet">
-   <link href="/css/lightbox.css" rel="stylesheet" type="text/css" media="all" />
-   <link href="/css/style.css" rel="stylesheet">
+   <link href="/css/lightbox.css" rel="style9sheet" type="text/css" media="all" />
+   <link href="/css/store/store.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-default color-fill navbar-fixed-top">
-   <div class="col-md-12">
-      <div class="nav">
-         <button class="btn-nav">
-            <span class="icon-bar top"></span>
-            <span class="icon-bar middle"></span>
-            <span class="icon-bar bottom"></span>
-         </button>
-      </div>
-      <a class="navbar-brand" href="/">
-         <img class="logo" src="/img/logo.png" alt="">
-      </a>
-      <div class="nav-content hideNav hidden">
-         <ul class="nav-list vcenter">
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-               <a class="item-anchor" href="/">"[[${@rq.member.name}]]" MyPage </a>
-            </li>
-            <li class="nav-item"><a class="item-anchor" href="/">Home</a></li>
-            <li class="nav-item"><a class="item-anchor" href="/member/login" sec:authorize="isAnonymous()">Login</a></li>
-            <li class="nav-item"><a class="item-anchor" href="javascript: document.logoutForm.submit();" sec:authorize="isAuthenticated()">Logout</a></li>
-            <form name="logoutForm" method="POST" th:action="@{/member/logout}" hidden></form>
-            <li class="nav-item"><a class="item-anchor" href="/map">Travel Map</a></li>
-            <li class="nav-item"><a class="item-anchor" href="/post/list">Wantrip Story</a></li>
-            <li class="nav-item"><a class="item-anchor" href="/store/list">Store</a></li>
-         </ul>
-      </div>
-   </div>
-</nav>
-<section id="portfolio">
-   <div class="container">
-      <ul class="portfolio-sorting list-inline text-center">
-         <li><a href="#" data-group="all" class="active">All</a>
-         </li>
-         <li><a href="#" data-group="moment">Moment</a>
-         </li>
-         <li><a href="#" data-group="people">People</a>
-         </li>
-         <li><a href="#" data-group="mountain">Mountain</a>
-         </li>
-      </ul>
-      <div class="row">
-         <div class="col-sm-12">
-            <div class="lightbox-grid square-thumbs" data-gallery-title="Gallery">
-               <ul class="portfolio-items list-unstyled" id="grid">
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["moment","people"]'>
-                     <a href="/img/portfolio1.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio1.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["people"]'>
-                     <a href="/img/portfolio2.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio2.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["mountain"]'>
-                     <a href="/img/portfolio3.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio3.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["people"]'>
-                     <a href="/img/portfolio4.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio4.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["moment"]'>
-                     <a href="/img/portfolio5.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio5.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["people"]'>
-                     <a href="/img/portfolio6.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio6.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["people"]'>
-                     <a href="/img/portfolio7.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio7.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["mountain"]'>
-                     <a href="/img/portfolio8.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio8.jpg" />
-                        </div>
-                     </a>
-                  </li>
-                  <li class="col-md-4 col-sm-12 col-xs-12 no-gutter" data-groups='["mountain"]'>
-                     <a href="/img/portfolio9.jpg" data-lightbox="true">
-                        <div class="background-image-holder">
-                           <img alt="portfolio" class="background-image" src="/img/portfolio9.jpg" />
-                        </div>
-                     </a>
-                  </li>
-               </ul>
-            </div>
+
+<section layout:fragment="main" class="shop-items">
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
          </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
       </div>
+      <div class="price"><span>$160</span></div>
    </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
+
+   <div class="shop-item">
+      <a href="#" class="shop-item--container">
+         <div class="meta">
+            <span class="tag">new</span>
+            <span class="discount">-19%</span>
+         </div>
+         <img src="https://user-images.githubusercontent.com/52452/42075807-a4f568fc-7b40-11e8-8024-d4183c805a69.png" width="160" height="160">
+      </a>
+      <div class="title">
+         <h3><a href="#">Basket with handles</a></h3>
+      </div>
+      <div class="price"><span>$160</span></div>
+   </div>
+   <!-- ./shop-item -->
 </section>
+<!-- ./shop-items -->
+
 <!-- script -->
-<script src="/js/jquery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
 <script src="/js/lightbox-plus-jquery.js"></script>
 <script src="/js/jquery.shuffle.min.js"></script>
-<script src="/js/modernizr.js"></script>
-<script src="/js/script.js"></script>
 </body>
 </html>
