@@ -14,12 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-<!--    &lt;!&ndash; 폰트어썸 &ndash;&gt;-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">-->
-
-<!--    &lt;!&ndash; 테일윈드 &ndash;&gt;-->
-<!--    <script src="https://cdn.tailwindcss.com"></script>-->
-
     <!-- Css -->
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
@@ -40,7 +34,7 @@
             <div class="nav-content hideNav hidden">
                 <ul class="nav-list vcenter">
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="item-anchor" href="/">"[[${@rq.member.name}]]" MyPage </a>
+                        <a class="item-anchor" href="/member/profile">"[[${@rq.member.name}]]" MyPage </a>
                     </li>
                     <li class="nav-item"><a class="item-anchor" href="/">Home</a></li>
                     <li class="nav-item"><a class="item-anchor" href="/member/login" sec:authorize="isAnonymous()">Login</a></li>
@@ -94,9 +88,6 @@
             </ul>
         </nav>
     </footer>
-
-    <!--&lt;!&ndash; Header &ndash;&gt;-->
-<!--<div layout:fragment="main" class="span12"></div>-->
 
 <!-- script -->
 <script src="/js/common.js"></script>
