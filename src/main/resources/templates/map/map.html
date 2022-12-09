@@ -1,15 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html layout:decorate="~{/layout/layout}">
 <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="">
-   <meta name="author" content="">
    <title>Wantrip | 떠나자! 원트립</title>
    <!-- Css -->
-   <link href="/css/bootstrap.css" rel="stylesheet">
-   <link href="/css/style.css" rel="stylesheet">
    <link href="/css/map/map.css" rel="stylesheet">
 </head>
 <body>
@@ -41,7 +34,7 @@
       </div>
    </div>
 </nav>
-<section id="about">
+<section layout:fragment="main" id="about">
    <div class="container">
       <div class="row">
          <div class="col-md-12">
@@ -97,10 +90,6 @@
 </section>
 <!-- script -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 사용하세요&libraries=services"></script>
-<script src="/js/jquery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/modernizr.js"></script>
-<script src="/js/script.js"></script>
 <script src="/js/map/map.js"></script>
 </body>
 </html>
