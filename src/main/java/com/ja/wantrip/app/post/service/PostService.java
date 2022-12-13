@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -79,5 +83,34 @@ public class PostService {
     @Transactional
     public void remove(Post post) {
         postRepository.delete(post);
+    }
+
+    public List<Post> findAllForPrintByAuthorIdOrderByIdDesc(long authorId) {
+        List<Post> posts = postRepository.findAllByAuthorIdOrderByIdDesc(authorId);
+        loadForPrintData(posts);
+
+        return posts;
+    }
+
+    public void loadForPrintData(List<Post> posts) {
+        long[] ids = posts
+                .stream()
+                .mapToLong(Post::getId)
+                .toArray();
+
+        List<PostTag> postTagsByPostIds = postTagService.getPostTagsByPostIdIn(ids);
+
+        Map<Long, List<PostTag>> postTagsByPostIdsMap = postTagsByPostIds.stream()
+                .collect(groupingBy(
+                        postTag -> postTag.getPost().getId(), toList()
+                ));
+
+        posts.stream().forEach(post -> {
+            List<PostTag> postTags = postTagsByPostIdsMap.get(post.getId());
+
+            if (postTags == null || postTags.size() == 0) return;
+
+            post.getExtra().put("postTags", postTags);
+        });
     }
 }
