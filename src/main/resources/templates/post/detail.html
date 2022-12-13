@@ -53,7 +53,7 @@
 
         <div>
             <a th:if="${@postService.actorCanModify(@rq.member, post)}"
-               th:href="@{|/post/${post.id}/modify|}"
+               th:href="@{|/post/modify/${post.id}|}"
                class="btn btn-secondary btn-sm btn-outline">
                 <i class="fa-solid fa-eraser"></i>
                 <span class="ml-1">수정</span>

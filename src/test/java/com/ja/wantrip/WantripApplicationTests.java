@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class WantripApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void z() {
 	}
 
 }
