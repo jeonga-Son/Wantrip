@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<section layout:fragment="main" class="post-list"  style="display:inline-block;">
+<section layout:fragment="main" class="post-list">
     <a th:each="post : ${paging}" th:href="@{|/post/${post.id}|}">
         <div class="box__gallery">
             <img src="/img/post/list.jpg" class="box__thumb">
@@ -24,7 +24,7 @@
     </a>
 
     <!--페이징처리 시작-->
-    <div th:if="${!paging.isEmpty()}">
+    <div th:if="${!paging.isEmpty()}" style="text-align:center;">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a th:href="@{|?page=${paging.number-1}|}" class="page-link">
