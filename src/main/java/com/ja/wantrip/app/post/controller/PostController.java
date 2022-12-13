@@ -46,7 +46,7 @@ public class PostController {
 
     @GetMapping("/list")
     public String showList(Model model) {
-        List<Post> posts = postService.findAllForPrintByAuthorIdOrderByIdDesc(rq.getId());
+        List<Post> posts = postService.findAll();
 
         model.addAttribute("posts", posts);
 
@@ -66,7 +66,7 @@ public class PostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}/modify")
+    @GetMapping("/modify/{id}")
     public String showModify(@PathVariable long id, Model model) {
         Post post = postService.findForPrintById(id).get();
 
@@ -82,7 +82,7 @@ public class PostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{id}/modify")
+    @PostMapping("/modify/{id}")
     public String modify(@Valid PostForm postForm, @PathVariable long id) {
         Post post = postService.findById(id).get();
         Member actor = rq.getMember();
@@ -96,10 +96,10 @@ public class PostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{id}/remove")
+    @PostMapping("/remove/{id}")
     public String remove(@PathVariable long id) {
         Post post = postService.findById(id).get();
-        Member actor = rq.getMember();
+        Member actor = post.getAuthor();
 
         if (postService.actorCanRemove(actor, post) == false) {
             throw new ActorCanNotRemoveException();

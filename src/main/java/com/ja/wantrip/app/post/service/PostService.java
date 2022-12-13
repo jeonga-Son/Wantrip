@@ -85,12 +85,12 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public List<Post> findAllForPrintByAuthorIdOrderByIdDesc(long authorId) {
-        List<Post> posts = postRepository.findAllByAuthorIdOrderByIdDesc(authorId);
-        loadForPrintData(posts);
-
-        return posts;
-    }
+//    public List<Post> findAllForPrintByPostIdOrderByIdDesc(long postId) {
+//        List<Post> posts = postRepository.findAllByPostIdOrderByIdDesc(postId);
+//        loadForPrintData(posts);
+//
+//        return posts;
+//    }
 
     public void loadForPrintData(List<Post> posts) {
         long[] ids = posts
@@ -112,5 +112,11 @@ public class PostService {
 
             post.getExtra().put("postTags", postTags);
         });
+    }
+
+    public List<Post> findAll() {
+        List<Post> posts = postRepository.findAll();
+
+        return posts;
     }
 }

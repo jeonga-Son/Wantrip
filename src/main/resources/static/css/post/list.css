@@ -1,5 +1,5 @@
 .box__gallery{display:inline-block;overflow:hidden;width:300px;margin:20px;border:1px solid #ddd;border-radius:6px}
-.box__gallery .box__thumb{height:200px;background:#000}
+.box__gallery .box__thumb{height:200px;background:red}
 .box__gallery .box__info{padding:20px;height:100px}
 .box__gallery .box__info .text__info{display:-webkit-inilne-flex;display: inline-flex;max-width:100%}
 .box__gallery .box__info .text__title{overflow:hidden;

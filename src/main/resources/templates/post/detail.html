@@ -65,7 +65,7 @@
                 <i class="fa-solid fa-trash"></i>
                 <span class="ml-1">삭제</span>
             </a>
-            <form th:action="@{|/post/${post.id}/remove|}" method="POST" hidden></form>
+            <form th:action="@{|/post/remove/${post.id}|}" method="POST" hidden></form>
 
             <button type="button" onclick="history.back();" class="btn btn-secondary btn-sm  btn-outline">
                 <i class="fa-solid fa-angle-left"></i>
