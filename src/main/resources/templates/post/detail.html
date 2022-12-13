@@ -22,8 +22,7 @@
 
         <div class="flex flex-wrap gap-3">
             <div class="flex">
-                <svg width="20" height="20" th:data-jdenticon-value="${post.author.jdenticon}"></svg>
-                <div th:text="${post.author.name}"></div>
+                <div th:text="|글쓴이 : ${post.author.name}|"></div>
             </div>
 
             <div class="flex flex-wrap gap-3">
@@ -73,9 +72,9 @@
             </button>
         </div>
 
-        <div class="flex justify-center">
-            <svg width="200" height="200" th:data-jdenticon-value="${post.jdenticon}"></svg>
-        </div>
+<!--        <div class="flex justify-center">-->
+<!--            <svg width="200" height="200" th:data-jdenticon-value="${post.jdenticon}"></svg>-->
+<!--        </div>-->
 
         <div class="toast-ui-viewer">
             <div class="toastui-editor-contents" style="overflow-wrap: break-word;"

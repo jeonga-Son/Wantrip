@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- 제이쿼리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <!-- toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- 폰트어썸 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <!-- 테일윈드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Css -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+</head>
+<body>
+<!-- 데이지 UI -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css" rel="stylesheet" type="text/css"/>
+
+<!-- common.css -->
+<link href="/resource/common/common.css" rel="stylesheet" type="text/css"/>
+
+<nav layout:fragment="navbar" class="navbar navbar-default color-fill navbar-fixed-top">
+    <div class="col-md-12">
+        <div class="nav">
+            <button class="btn-nav">
+                <span class="icon-bar top"></span>
+                <span class="icon-bar middle"></span>
+                <span class="icon-bar bottom"></span>
+            </button>
+        </div>
+        <a class="navbar-brand" href="/">
+            <img class="logo" src="/img/logo.png" alt="">
+        </a>
+        <div class="nav-content hideNav hidden">
+            <ul class="nav-list vcenter">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="item-anchor" href="/member/profile">"[[${@rq.member.name}]]" MyPage </a>
+                </li>
+                <li class="nav-item"><a class="item-anchor" href="/">Home</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/member/login" sec:authorize="isAnonymous()">Login</a></li>
+                <li class="nav-item"><a class="item-anchor" href="javascript: document.logoutForm.submit();" sec:authorize="isAuthenticated()">Logout</a></li>
+                <form name="logoutForm" method="POST" th:action="@{/member/logout}" hidden></form>
+                <li class="nav-item"><a class="item-anchor" href="/map">Travel Map</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/post/list">Wantrip Story</a></li>
+                <li class="nav-item"><a class="item-anchor" href="/store/list">Store</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section layout:fragment="main" class="post-write">
+
+    <script>
+        let PostWrite__submitDone = false;
+
+        function PostWrite__submit(form) {
+            if (PostWrite__submitDone) {
+                return;
+            }
+
+            form.subject.value = form.subject.value.trim();
+
+            if (form.subject.value.length == 0) {
+                warningModal("제목을 입력해주세요.");
+                form.subject.focus();
+
+                return;
+            }
+
+            form.postTagContents.value = form.postTagContents.value.trim();
+
+            if (form.postTagContents.value.length == 0) {
+                warningModal("태그를 입력해주세요.");
+                form.postTagContents.focus();
+
+                return;
+            }
+
+            const editor = $(form).find(".toast-ui-editor").data("data-toast-editor");
+            const markdown = editor.getMarkdown().trim();
+            const html = editor.getHTML().trim();
+
+            form.content.value = markdown;
+            form.contentHtml.value = html;
+
+            if (form.content.value.length == 0 || form.contentHtml.value.length == 0) {
+                warningModal("내용을 입력해주세요");
+                editor.focus();
+                return;
+            }
+
+            form.submit();
+            PostWrite__submitDone = true;
+        }
+    </script>
+
+    <form th:action method="POST" class="flex flex-col gap-3" onsubmit="PostWrite__submit(this); return false;">
+        <input type="hidden" name="content">
+        <input type="hidden" name="contentHtml">
+        <div class="form-control">
+            <labe class="label">
+                <span class="label-text">제목</span>
+            </labe>
+
+            <input type="text" autofocus name="subject" placeholder="제목" class="input input-bordered" maxlength="50">
+        </div>
+
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">태그</span>
+            </label>
+
+            <input type="text" autofocus name="postTagContents" placeholder="#태그1 #태그2 #태그3 ..."
+                   class="input input-bordered" maxlength="50">
+        </div>
+
+        <div class="form-control">
+            <labe class="label">
+                <span class="label-text">내용</span>
+            </labe>
+
+            <div class="toast-ui-editor" toast-ui-editor--height="calc(50vh)"></div>
+        </div>
+
+        <div class="grid grid-cols-2 mt-2 gap-2" style="margin-top:50px;">
+            <button type="button" onclick="history.back();" class="btn btn-secondary btn-outline">
+                <i class="fa-solid fa-angle-left"></i>
+                <span class="ml-1">취소</span>
+            </button>
+
+            <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-pen"></i>
+                <span class="ml-1">작성</span>
+            </button>
+        </div>
+    </form>
+    <th:block th:replace="fragment/toastEditor :: toastEditor"></th:block>
+</section>
+
+<footer layout:fragment="footer" class="main-footer">
+    <nav>
+        <h3>Customer Service</h3>
+        <ul>
+            <li><a href="#">Help & Contact Us</a></li>
+            <li><a href="#">Returns & Refunds</a></li>
+            <li><a href="#">Online Stores</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <h3>Customer Service</h3>
+        <ul>
+            <li><a href="#">Help & Contact Us</a></li>
+            <li><a href="#">Returns & Refunds</a></li>
+            <li><a href="#">Online Stores</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <h3>Customer Service</h3>
+        <ul>
+            <li><a href="#">Help & Contact Us</a></li>
+            <li><a href="#">Returns & Refunds</a></li>
+            <li><a href="#">Online Stores</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <h3>Customer Service</h3>
+        <ul>
+            <li><a href="#">Help & Contact Us</a></li>
+            <li><a href="#">Returns & Refunds</a></li>
+            <li><a href="#">Online Stores</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+    </nav>
+</footer>
+
+<!-- script -->
+<script src="/js/common.js"></script>
+<script th:inline="javascript">
+    const params = /*[[ ${param} ]]*/ null;
+
+    if (params.msg) {
+        successModal(params.msg[0]);
+    }
+
+    if (params.errorMsg) {
+        errorModal(params.errorMsg[0]);
+    }
+</script>
+<script src="/js/lightbox-plus-jquery.js"></script>
+<script src="/js/jquery.shuffle.min.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/menu-color.js"></script>
+<script src="/js/modernizr.js"></script>
+<script src="/js/script.js"></script>s
+</body>
+</html>
