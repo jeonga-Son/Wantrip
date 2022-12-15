@@ -1,0 +1,18 @@
+.box__gallery{display:inline-block;overflow:hidden;width:300px;margin:20px;border:1px solid #ddd;border-radius:6px}
+.box__gallery .box__thumb{height:200px;  object-fit: cover;}
+.box__gallery .box__info{padding:20px;height:100px}
+.box__gallery .box__info .text__info{display:-webkit-inline-flex;display: inline-flex;max-width:100%}
+.box__gallery .box__info .text__title{overflow:hidden;
+text-overflow: ellipsis;
+line-height:20px;
+display: -webkit-box;
+max-height: 40px;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+white-space: normal;
+word-wrap: break-word;}
+.box__gallery .box__info .tag{display:inline-block;position:relative;display: flex;
+align-self:flex-end;top:-3px}
+.box__gallery .box__info .tag .icon-file{display:inline-block;margin-left:4px;width:14px;height:14px;background:#000}
+.box__gallery .box__info .tag .icon-new{display:inline-block;width:14px;height:14px;background:#ff0000}
+.post-list{width:1200px; text-align:center; margin:0 auto;}
