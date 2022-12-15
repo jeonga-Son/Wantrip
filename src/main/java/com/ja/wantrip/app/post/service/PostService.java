@@ -1,16 +1,26 @@
 package com.ja.wantrip.app.post.service;
 
+import com.ja.wantrip.app.base.exception.DataNotFoundException;
 import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.post.entity.Post;
 import com.ja.wantrip.app.post.repository.PostRepository;
 import com.ja.wantrip.app.postTag.entity.PostTag;
 import com.ja.wantrip.app.postTag.service.PostTagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -79,5 +89,58 @@ public class PostService {
     @Transactional
     public void remove(Post post) {
         postRepository.delete(post);
+    }
+
+//    public List<Post> findAllForPrintByPostIdOrderByIdDesc(long postId) {
+//        List<Post> posts = postRepository.findAllByPostIdOrderByIdDesc(postId);
+//        loadForPrintData(posts);
+//
+//        return posts;
+//    }
+
+    public void loadForPrintData(List<Post> posts) {
+        long[] ids = posts
+                .stream()
+                .mapToLong(Post::getId)
+                .toArray();
+
+        List<PostTag> postTagsByPostIds = postTagService.getPostTagsByPostIdIn(ids);
+
+        Map<Long, List<PostTag>> postTagsByPostIdsMap = postTagsByPostIds.stream()
+                .collect(groupingBy(
+                        postTag -> postTag.getPost().getId(), toList()
+                ));
+
+        posts.stream().forEach(post -> {
+            List<PostTag> postTags = postTagsByPostIdsMap.get(post.getId());
+
+            if (postTags == null || postTags.size() == 0) return;
+
+            post.getExtra().put("postTags", postTags);
+        });
+    }
+
+    public List<Post> findAll() {
+        List<Post> posts = postRepository.findAll();
+
+        return posts;
+    }
+
+    public Page<Post> getList(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 9, Sort.by(sorts));
+        return this.postRepository.findAll(pageable);
+    }
+
+    public Post getPost(long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("%d번 글을 찾을 수 없습니다.".formatted(id)));
+    }
+
+    public void vote(Post post, Member member) {
+        post.getVoter().add(member);
+
+        postRepository.save(post);
     }
 }

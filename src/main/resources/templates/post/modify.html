@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html layout:decorate="~{/layout/layout}">
+<html layout:decorate="~{/layout/postLayout}">
 <head>
     <title>Wantrip | 게시판</title>
-    <!-- Css -->
-    <link href="/css/lightbox.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/css/post/list.css" rel="stylesheet">
 </head>
 <body>
 
@@ -103,13 +100,13 @@
                    maxlength="50" th:value="${post.extra_inputValue_hashTagContents}">
         </div>
 
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">이미지</span>
-            </label>
+<!--        <div class="form-control">-->
+<!--            <label class="label">-->
+<!--                <span class="label-text">이미지</span>-->
+<!--            </label>-->
 
-            <svg width="300" height="300" th:data-jdenticon-value="${post.jdenticon}"></svg>
-        </div>
+<!--            <svg width="300" height="300" th:data-jdenticon-value="${post.jdenticon}"></svg>-->
+<!--        </div>-->
 
         <div class="form-control">
             <label class="label">
@@ -120,7 +117,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 mt-2 gap-2">
+        <div class="grid grid-cols-2 mt-2 gap-2" style="margin-top: 50px;">
             <button type="button" onclick="history.back();" class="btn btn-secondary btn-outline">
                 <i class="fa-solid fa-angle-left"></i>
                 <span class="ml-1">취소</span>

@@ -10,7 +10,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -36,10 +38,18 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     private Member author;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Answer> answerList = new ArrayList<>();
+
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.EXTRA)
     Set<PostTag> postTags = new LinkedHashSet<>();
+
+    @ManyToMany
+    Set<Member> voter;
+
+    private Integer hitCount = 0;
 
     public void updatePostTags(Set<PostTag> newPostTags) {
         // 지울거 모으고
@@ -90,5 +100,10 @@ public class Post extends BaseEntity {
 
     public String getJdenticon() {
         return "post__" + getId();
+    }
+
+    public void addAnswer(Answer answer) {
+        answer.setPost(this);
+        getAnswerList().add(answer);
     }
 }

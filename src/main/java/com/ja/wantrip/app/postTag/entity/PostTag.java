@@ -15,8 +15,8 @@ import static javax.persistence.FetchType.LAZY;
 import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder

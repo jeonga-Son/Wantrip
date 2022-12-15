@@ -1,6 +1,7 @@
 package com.ja.wantrip.app.member.service;
 
 import com.ja.wantrip.app.base.dto.RsData;
+import com.ja.wantrip.app.base.exception.DataNotFoundException;
 import com.ja.wantrip.app.email.service.EmailVerificationService;
 import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.member.exception.AlreadyJoinException;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -67,4 +68,7 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
+    public Member getUser(String username) {
+        return this.memberRepository.findByUsername(username).orElseThrow(() -> new DataNotFoundException("사용자가 없습니다."));
+    }
 }

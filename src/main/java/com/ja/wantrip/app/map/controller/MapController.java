@@ -1,4 +1,4 @@
-package com.ja.wantrip.app.map;
+package com.ja.wantrip.app.map.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
