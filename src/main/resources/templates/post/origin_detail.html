@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+<head>
+    <title>Wantrip | 게시판</title>
+    <!-- Css -->
+    <link href="/css/lightbox.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/post/list.css" rel="stylesheet">
+    <link href="/css/post/detail.css" rel="stylesheet">
+</head>
+<body>
+
+<section layout:fragment="main" class="post-detail section section-write container mx-auto">
+    <div class="px-2 pt-4">
+        <h1 class="font-bold text-lg">
+            <i class="fa-solid fa-newspaper"></i>
+            글 내용
+        </h1>
+
+        <div class="flex flex-col mt-2 gap-3">
+            <div>
+                <h2 class="font-bold" th:text="${post.subject}"></h2>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+                <div class="flex">
+                    <div th:text="|글쓴이 : ${post.author.name}|"></div>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <div>
+                        <div class="badge">
+                            <i class="fa-solid fa-pen"></i>
+                            <span class="ml-1">작성</span>
+                            <span class="ml-1"
+                                  th:text="${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')}"></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="badge badge-outline">
+                            <i class="fa-solid fa-eraser"></i>
+                            <span class="ml-1">수정</span>
+                            <span class="ml-1"
+                                  th:text="${#temporals.format(post.modifyDate, 'yy-MM-dd HH:mm')}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div th:utext="${post.extra_postTagLinks}"></div>
+                </div>
+            </div>
+
+            <div>
+                <a th:if="${@postService.actorCanModify(@rq.member, post)}"
+                   th:href="@{|/post/modify/${post.id}|}"
+                   class="btn btn-secondary btn-sm btn-outline">
+                    <i class="fa-solid fa-eraser"></i>
+                    <span class="ml-1">수정</span>
+                </a>
+
+                <a th:if="${@postService.actorCanRemove(@rq.member, post)}" href="javascript:;"
+                   onclick="if ( confirm('정말로 삭제하시겠습니까?') ) $(this).next().submit();"
+                   class="btn btn-secondary btn-sm btn-outline">
+                    <i class="fa-solid fa-trash"></i>
+                    <span class="ml-1">삭제</span>
+                </a>
+                <form th:action="@{|/post/remove/${post.id}|}" method="POST" hidden></form>
+
+                <button type="button" onclick="history.back();" class="btn btn-secondary btn-sm  btn-outline">
+                    <i class="fa-solid fa-angle-left"></i>
+                    <span class="ml-1">이전</span>
+                </button>
+            </div>
+
+    <!--        <div class="flex justify-center">-->
+    <!--            <svg width="200" height="200" th:data-jdenticon-value="${post.jdenticon}"></svg>-->
+    <!--        </div>-->
+
+            <div class="toast-ui-viewer" style="margin-top:50px;">
+                <div class="toastui-editor-contents" style="overflow-wrap: break-word;"
+                     th:utext="${post.forPrintContentHtml}"></div>
+            </div>
+        </div>
+
+        <!---공유 버튼--->
+        <div class="post-btn">
+            <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span>24</span></button>
+            <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
+        </div>
+
+        <!--댓글 시작---->
+        <article class="post-comment">
+
+            <p>댓글 2개</p>
+
+            <ul class="coment-box">
+                <li class="flex-box">
+                    <div class="user-text">
+                        <p>cjlover</p>
+                        <p>정말 맛있고 건강한 재료들이 들어가서 좋아요.</p>
+                        <small class="gray-text">1시간 전</small>
+                    </div>
+                    <div onclick="openToc1()" class="dropdown-btn">
+                        <div class="drop-menu" id="more1">
+                            <a href="#">신고</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex-box">
+                    <div class="user-text">
+                        <p>shrimpmania</p>
+                        <p>새우살이 탱글탱글하게 씹혀요!</p>
+                        <small class="gray-text">1시간 전</small>
+                    </div>
+
+                    <div onclick="openToc2()" class="dropdown-btn">
+                        <div class="drop-menu" id="more2">
+                            <a href="#">신고</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        <div class="coment-writer">
+
+            <textarea rows="4" placeholder="댓글을 입력해주세요">  </textarea>
+            <div class="flex-box">
+                <div>
+                    <input type="checkbox" name="" value="" id="secret" class="">
+                    <label for="secret">
+                        비밀글
+                    </label>
+                </div>
+                <button class="btn-rank2">등록하기</button>
+            </div>
+        </div>
+        </article>
+    </div>
+</section>
+
+
+<!-- script -->
+<script src="/js/lightbox-plus-jquery.js"></script>
+<script src="/js/jquery.shuffle.min.js"></script>
+</body>
+</html>

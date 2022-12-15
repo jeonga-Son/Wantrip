@@ -1,5 +1,6 @@
 package com.ja.wantrip.app.post.service;
 
+import com.ja.wantrip.app.base.exception.DataNotFoundException;
 import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.post.entity.Post;
 import com.ja.wantrip.app.post.repository.PostRepository;
@@ -130,5 +131,10 @@ public class PostService {
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 9, Sort.by(sorts));
         return this.postRepository.findAll(pageable);
+    }
+
+    public Post getPost(long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("%d번 글을 찾을 수 없습니다.".formatted(id)));
     }
 }

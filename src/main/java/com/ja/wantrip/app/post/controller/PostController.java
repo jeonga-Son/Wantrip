@@ -5,6 +5,7 @@ import com.ja.wantrip.app.base.exception.ActorCanNotRemoveException;
 import com.ja.wantrip.app.base.rq.Rq;
 import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.post.entity.Post;
+import com.ja.wantrip.app.post.form.AnswerForm;
 import com.ja.wantrip.app.post.form.PostForm;
 import com.ja.wantrip.app.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,7 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
-    public String showDetail(@PathVariable Long id, Model model) {
+    public String showDetail(@PathVariable Long id, Model model, AnswerForm answerForm) {
         Post post = postService.findForPrintById(id).get();
 
         Member actor = rq.getMember();

@@ -3,92 +3,126 @@
 <head>
     <title>Wantrip | 게시판</title>
     <!-- Css -->
-    <link href="/css/lightbox.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/css/post/list.css" rel="stylesheet">
+    <link href="/css/post/detail.css" rel="stylesheet">
 </head>
 <body>
 
 <section layout:fragment="main" class="post-detail section section-write container mx-auto">
-    <div class="px-2 pt-4">
-    <h1 class="font-bold text-lg">
-        <i class="fa-solid fa-newspaper"></i>
-        글 내용
-    </h1>
+    <div class="box">
 
-    <div class="flex flex-col mt-2 gap-3">
-        <div>
-            <h2 class="font-bold" th:text="${post.subject}"></h2>
-        </div>
+        <h2>게시글 보기</h2>
 
-        <div class="flex flex-wrap gap-3">
-            <div class="flex">
-                <div th:text="|글쓴이 : ${post.author.name}|"></div>
-            </div>
-
-            <div class="flex flex-wrap gap-3">
-                <div>
-                    <div class="badge">
-                        <i class="fa-solid fa-pen"></i>
-                        <span class="ml-1">작성</span>
-                        <span class="ml-1"
-                              th:text="${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')}"></span>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="badge badge-outline">
-                        <i class="fa-solid fa-eraser"></i>
-                        <span class="ml-1">수정</span>
-                        <span class="ml-1"
-                              th:text="${#temporals.format(post.modifyDate, 'yy-MM-dd HH:mm')}"></span>
-                    </div>
-                </div>
-            </div>
-
+        <article class="post-box">
+            <!--게시글 제목(상단)--->
             <div>
+                <h3 class="font-bold" th:text="${post.subject}"></h3>
                 <div th:utext="${post.extra_postTagLinks}"></div>
+
+                <div class="post-head">
+                    <p class="gray-text" th:text="|작성 : ${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')} // 수정 : ${#temporals.format(post.modifyDate, 'yy-MM-dd HH:mm')}|"></p>
+                    <div>
+                        <p>좋아요<span class="gray-text">24</span></p>
+                        <p>조회수<span class="gray-text">312</span>
+                        <div>
+                            <a th:if="${@postService.actorCanModify(@rq.member, post)}"
+                               th:href="@{|/post/modify/${post.id}|}"
+                               class="btn btn-secondary  btn-outline btn-rank2">
+                                <span style="color:white;">글수정</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+            <!--게시글 실제 컨텐츠 --->
+            <div class="post-content">
+                <div class="toast-ui-viewer" style="margin-top:50px;">
+                    <div class="toastui-editor-contents" style="overflow-wrap: break-word;"
+                         th:utext="${post.forPrintContentHtml}"></div>
+                </div>
+            </div>
+
+            <!---공유 버튼--->
+            <div class="post-btn">
+                <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span>24</span></button>
+                <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
+            </div>
+
+            <!--댓글 시작---->
+            <article class="post-comment">
+
+                <p th:if="${#lists.size(post.answerList)} > 0" th:text="|${#lists.size(post.answerList)}개의 답변이 있습니다.|"></p>
+
+                <ul class="coment-box" th:each="answer : ${post.answerList}">
+                    <li class="flex-box">
+                        <div class="user-text">
+                            <p th:text="${answer.author.username}"></p>
+                            <p th:text="${answer.content}"></p>
+                            <small class="gray-text" th:text="|작성 : ${#temporals.format(answer.createDate, 'yy-MM-dd HH:mm')}"></small>
+                        </div>
+                        <div onclick="openToc1()" class="dropdown-btn">
+                            <div class="drop-menu" id="more1">
+                                <a href="#">신고</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!--댓글입력 폼 시작---->
+                <form th:action="@{|/answer/create/${post.id}|}" method="post">
+                    <div class="coment-writer">
+                        <textarea name="content" id="content" rows="4" placeholder="댓글을 입력해주세요">  </textarea>
+                        <div class="flex-box">
+                            <div>
+                                <input type="checkbox" name="" value="" id="secret" class="">
+                                <label for="secret">
+                                    비밀글
+                                </label>
+                            </div>
+                            <button class="btn-rank2" type="submit">등록하기</button>
+                        </div>
+                    </div>
+                </form>
+            </article>
+            <!--▲까지 댓글 아티클 끝!---->
+            <div class="popularitypost-box">
+
+                <h5>인기 게시글</h5>
+
+                <div>
+                    <section class="flex-box">
+                        <p>주변에 한두 명쯤은 유독 면을 좋아하는 사람들이 있지 않나요? 밥보다 면을 더 좋아하는 사람들 말입니다. 길게 뽑은 면을 기호에 맞춰 육수와 고명을 넣고 후루룩 소리를 내며 먹는 면 요리는 전 세계인들이 사랑하는 메뉴입니다. 그렇다면 한국인이 특히나 좋아하는 면 요리는 어떤 종류가 있을까요?</p>
+                        <div>
+                            <img src="https://user-images.githubusercontent.com/110369667/189068953-c9fc0e39-2968-49d7-8f8b-88987bddc78e.png" alt="">
+                        </div>
+                    </section>
+                    <section class="flex-box">
+                        <p>바삭하게 구운 고소한 껍질과 부드럽고 짭조름한 살코기의 생선구이! 특별한 반찬 없이도 밥 한 그릇을 뚝딱 해치울 수 있는 생선구이는 최고의 집밥 메뉴입니다. 그러나 번거로운 생선 손질과 특유의 비린내, 굽는 내내 집안을 연기로 가득히 채워야 하는 불편함 때문에 용기 없이는 못 먹는 음식이기도 한데요.</p>
+                        <div>
+                            <img src="https://user-images.githubusercontent.com/110369667/189068949-f44c628d-2c6a-4133-a1ba-ac85920141ea.png" alt="">
+                        </div>
+                    </section>
+                    <section class="flex-box">
+                        <p>여름이 시작되면 반년간 열심히 달려온 보상으로 여름휴가를 계획하게 됩니다.최근에는 해외로 휴가를 떠나는 사람들의 비율이 급격히 높아졌는데요. 일상 탈출과 함께 여행지에서의 새로운 경험을 기대하며 출국 날 만을 손꼽아 기다린 적, 다들 있으시죠? 떠나기 전 날 밤에는 체크리스트까지 만들어가며 꼼꼼히 짐을 쌉니다.</p>
+                        <div>
+                            <img src="https://user-images.githubusercontent.com/110369667/189068944-226d9607-9fc7-49ad-92e5-752e4604bba0.png" alt="">
+                        </div>
+                    </section>
+                </div>
+                <div>
+                    <a th:href="@{/post/list}">
+                        <button class="btn-rank2">목록으로 돌아가기</button>
+                    </a>
+                </div>
+            </div>
+        </article>
         </div>
-
-        <div>
-            <a th:if="${@postService.actorCanModify(@rq.member, post)}"
-               th:href="@{|/post/modify/${post.id}|}"
-               class="btn btn-secondary btn-sm btn-outline">
-                <i class="fa-solid fa-eraser"></i>
-                <span class="ml-1">수정</span>
-            </a>
-
-            <a th:if="${@postService.actorCanRemove(@rq.member, post)}" href="javascript:;"
-               onclick="if ( confirm('정말로 삭제하시겠습니까?') ) $(this).next().submit();"
-               class="btn btn-secondary btn-sm btn-outline">
-                <i class="fa-solid fa-trash"></i>
-                <span class="ml-1">삭제</span>
-            </a>
-            <form th:action="@{|/post/remove/${post.id}|}" method="POST" hidden></form>
-
-            <button type="button" onclick="history.back();" class="btn btn-secondary btn-sm  btn-outline">
-                <i class="fa-solid fa-angle-left"></i>
-                <span class="ml-1">이전</span>
-            </button>
-        </div>
-
-<!--        <div class="flex justify-center">-->
-<!--            <svg width="200" height="200" th:data-jdenticon-value="${post.jdenticon}"></svg>-->
-<!--        </div>-->
-
-        <div class="toast-ui-viewer">
-            <div class="toastui-editor-contents" style="overflow-wrap: break-word;"
-                 th:utext="${post.forPrintContentHtml}"></div>
-        </div>
+        </article>
     </div>
-    </div>
-
-    <th:block th:replace="fragment/toastEditor :: toastEditor"></th:block>
 </section>
 
 
 <!-- script -->
-<script src="/js/lightbox-plus-jquery.js"></script>
-<script src="/js/jquery.shuffle.min.js"></script>
+<script src="/js/post/detail.js"></script>
 </body>
 </html>
