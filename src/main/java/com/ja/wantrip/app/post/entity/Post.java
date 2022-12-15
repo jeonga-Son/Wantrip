@@ -46,6 +46,11 @@ public class Post extends BaseEntity {
     @LazyCollection(LazyCollectionOption.EXTRA)
     Set<PostTag> postTags = new LinkedHashSet<>();
 
+    @ManyToMany
+    Set<Member> voter;
+
+    private Integer hitCount = 0;
+
     public void updatePostTags(Set<PostTag> newPostTags) {
         // 지울거 모으고
         Set<PostTag> needToDelete = postTags

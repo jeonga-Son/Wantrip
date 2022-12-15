@@ -7,6 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+import java.util.Set;
+
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -26,4 +28,7 @@ public class Answer extends BaseEntity {
 
     @ManyToOne
     private Post post;
+
+    @ManyToMany
+    Set<Member> voter;
 }

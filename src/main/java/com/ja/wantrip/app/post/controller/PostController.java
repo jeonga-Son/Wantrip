@@ -4,6 +4,7 @@ import com.ja.wantrip.app.base.exception.ActorCanNotModifyException;
 import com.ja.wantrip.app.base.exception.ActorCanNotRemoveException;
 import com.ja.wantrip.app.base.rq.Rq;
 import com.ja.wantrip.app.member.entity.Member;
+import com.ja.wantrip.app.member.service.MemberService;
 import com.ja.wantrip.app.post.entity.Post;
 import com.ja.wantrip.app.post.form.AnswerForm;
 import com.ja.wantrip.app.post.form.PostForm;
@@ -17,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class PostController {
 
     private final PostService postService;
     private final Rq rq;
+    private final MemberService memberService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
@@ -107,5 +109,15 @@ public class PostController {
         postService.remove(post);
 
         return Rq.redirectWithMsg("/post/list", "%d번 글이 삭제되었습니다.".formatted(post.getId()));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String showVote(Principal principal, @PathVariable("id") Long id) {
+        Post post = this.postService.getPost(id);
+        Member member = memberService.getUser(principal.getName());
+
+        postService.vote(post, member);
+        return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글을 추천하였습니다.".formatted(id));
     }
 }

@@ -137,4 +137,10 @@ public class PostService {
         return postRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("%d번 글을 찾을 수 없습니다.".formatted(id)));
     }
+
+    public void vote(Post post, Member member) {
+        post.getVoter().add(member);
+
+        postRepository.save(post);
+    }
 }

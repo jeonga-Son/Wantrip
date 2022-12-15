@@ -21,7 +21,7 @@
                 <div class="post-head">
                     <p class="gray-text" th:text="|작성 : ${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')} // 수정 : ${#temporals.format(post.modifyDate, 'yy-MM-dd HH:mm')}|"></p>
                     <div>
-                        <p>좋아요<span class="gray-text">24</span></p>
+                        <p>좋아요<span class="gray-text" th:text="${#lists.size(post.voter)}"></span></p>
                         <p>조회수<span class="gray-text">312</span>
                         <div>
                             <a th:if="${@postService.actorCanModify(@rq.member, post)}"
@@ -45,7 +45,9 @@
 
             <!---공유 버튼--->
             <div class="post-btn">
-                <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span>24</span></button>
+                <a th:href="@{|/post/vote/${post.id}|}" class="vote">
+                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span>24</span></button>
+                </a>
                 <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
             </div>
 
