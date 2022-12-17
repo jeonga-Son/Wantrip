@@ -114,10 +114,11 @@ public class PostController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
     public String showVote(Principal principal, @PathVariable("id") Long id) {
-        Post post = this.postService.getPost(id);
+        Post post = postService.getPost(id);
         Member member = memberService.getUser(principal.getName());
 
         postService.vote(post, member);
-        return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글을 추천하였습니다.".formatted(id));
+        return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글에 좋아요를 눌렀습니다.".formatted(post.getId()));
     }
+
 }

@@ -417,7 +417,7 @@ input[type="checkbox"] {
   border-bottom: 2px solid #ddd;
 }
 
-.post-box .post-btn>button {
+.post-box .post-btn>a>button {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -425,7 +425,7 @@ input[type="checkbox"] {
   margin: 0;
 }
 
-.post-box .post-btn>button span {
+.post-box .post-btn>a>button span {
   font-size: .7rem;
   display: block;
   text-align: center;

@@ -41,15 +41,15 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Answer> answerList = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.EXTRA)
-    Set<PostTag> postTags = new LinkedHashSet<>();
-
     @ManyToMany
     Set<Member> voter;
 
     private Integer hitCount = 0;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    Set<PostTag> postTags = new LinkedHashSet<>();
 
     public void updatePostTags(Set<PostTag> newPostTags) {
         // 지울거 모으고

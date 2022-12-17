@@ -45,10 +45,12 @@
 
             <!---공유 버튼--->
             <div class="post-btn">
-                <a th:href="@{|/post/vote/${post.id}|}" class="vote">
-                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span>24</span></button>
+                <a th:href="@{|/post/vote/${post.id}|}">
+                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span th:if="${#lists.size(post.voter) != 0}" th:text="${#lists.size(post.voter)}"></span></button>
                 </a>
-                <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
+                <a href="#">
+                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
+                </a>
             </div>
 
             <!--댓글 시작---->
