@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+<head>
+    <title>Wantrip | 게시판</title>
+    <!-- Css -->
+    <link href="/css/post/detail.css" rel="stylesheet">
+</head>
+<body>
+
+<section layout:fragment="main" class="post-detail section section-write container mx-auto">
+    <script>
+        let AnswerModify__submitDone = false;
+
+        function AnswerModify__submit(form) {
+            if (AnswerModify__submitDone) {
+                return;
+            }
+
+            form.content.value = form.content.value.trim();
+
+            if (form.content.value.length == 0) {
+                warningModal("댓글을 입력해주세요.");
+                form.subject.focus();
+
+                return;
+            }
+
+            form.submit();
+            AnswerModify__submitDone = true;
+        }
+    </script>
+
+    <div class="box">
+
+        <h2>댓글 수정</h2>
+
+        <article class="post-box">
+            <!--게시글 제목(상단)--->
+
+                <!--댓글입력 폼 시작---->
+                <form th:action method="POST" onsubmit="AnswerModify__submit(this); return false;">
+                    <input type="hidden" name="content">
+                    <div class="coment-writer">
+                        <textarea name="content" id="content" rows="4" th:text="${answerForm.content}" placeholder="댓글을 입력해주세요"></textarea>
+                        <div class="flex-box">
+                            <div>
+                                <input type="checkbox" name="" value="" id="secret" class="">
+                                <label for="secret">
+                                    비밀글
+                                </label>
+                            </div>
+                            <button class="btn-rank2" type="submit">수정</button>
+                        </div>
+                    </div>
+                </form>
+            </article>
+            <!--▲까지 댓글 아티클 끝!---->
+    <!-- script -->
+    <script src="/js/post/detail.js"></script>
+    </div>
+</section>
+
+</body>
+</html>

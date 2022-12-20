@@ -8,48 +8,48 @@
 <section layout:fragment="main" class="post-write">
 
     <script>
-                let PostModify__submitDone = false;
+        let PostModify__submitDone = false;
 
-                function PostModify__submit(form) {
-                    if (PostModify__submitDone) {
-                        return;
-                    }
+        function PostModify__submit(form) {
+            if (PostModify__submitDone) {
+                return;
+            }
 
-                    form.subject.value = form.subject.value.trim();
+            form.subject.value = form.subject.value.trim();
 
-                    if (form.subject.value.length == 0) {
-                        warningModal("제목을 입력해주세요.");
-                        form.subject.focus();
+            if (form.subject.value.length == 0) {
+                warningModal("제목을 입력해주세요.");
+                form.subject.focus();
 
-                        return;
-                    }
+                return;
+            }
 
-                    form.postTagContents.value = form.postTagContents.value.trim();
+            form.postTagContents.value = form.postTagContents.value.trim();
 
-                    if (form.postTagContents.value.length == 0) {
-                        warningModal("태그를 입력해주세요.");
-                        form.postTagContents.focus();
+            if (form.postTagContents.value.length == 0) {
+                warningModal("태그를 입력해주세요.");
+                form.postTagContents.focus();
 
-                        return;
-                    }
+                return;
+            }
 
-                    const editor = $(form).find(".toast-ui-editor").data("data-toast-editor");
-                    const markdown = editor.getMarkdown().trim();
-                    const html = editor.getHTML().trim();
+            const editor = $(form).find(".toast-ui-editor").data("data-toast-editor");
+            const markdown = editor.getMarkdown().trim();
+            const html = editor.getHTML().trim();
 
-                    form.content.value = markdown;
-                    form.contentHtml.value = html;
+            form.content.value = markdown;
+            form.contentHtml.value = html;
 
-                    if (form.content.value.length == 0 || form.contentHtml.value.length == 0) {
-                        warningModal("내용을 입력해주세요");
-                        editor.focus();
-                        return;
-                    }
+            if (form.content.value.length == 0 || form.contentHtml.value.length == 0) {
+                warningModal("내용을 입력해주세요");
+                editor.focus();
+                return;
+            }
 
-                    form.submit();
-                    PostModify__submitDone = true;
-                }
-            </script>
+            form.submit();
+            PostModify__submitDone = true;
+            }
+         </script>
 
     <form th:action method="POST" class="flex flex-col gap-3" onsubmit="PostModify__submit(this); return false;">
         <input type="hidden" name="content">
@@ -127,7 +127,6 @@
                 <span class="ml-1">수정</span>
             </button>
         </div>
-
     </form>
     <th:block th:replace="fragment/toastEditor :: toastEditor"></th:block>
 </section>
