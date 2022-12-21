@@ -24,14 +24,22 @@
                     </a>
                     <span>관련 글</span>
                 </i>
+                <a th:href="@{|/post/write|}"
+                   class="btn btn-secondary  btn-outline btn-rank2" style="margin-left:20px;">
+                    <span style="color:white;">글작성</span>
+                </a>
             </h1>
-                <a th:each="postTag : ${postTags}" th:href="@{|/post/${postTag.post.id}|}">
+
+            <hr>
+
+            <a th:each="postTag : ${postTags}" th:href="@{|/post/${postTag.post.id}|}">
                     <div class="box__gallery">
                         <img src="/img/post/list.jpg" class="box__thumb">
                         <div class="box__info">
                         <span class="text__info">
                            <span class="text__title" th:text="${postTag.post.subject}"></span>
-                     </span>
+                            <div style="margin-top:10px;" th:utext="${postTag.post.extra_postTagLinks}"></div>
+                        </span>
                         </div>
                     </div>
                 </a>
