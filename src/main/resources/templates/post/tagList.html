@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+<head>
+    <title>Wantrip | 글 태그</title>
+    <!-- Css -->
+    <link href="/css/lightbox.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/post/list.css" rel="stylesheet">
+    <link href="/css/post/detail.css" rel="stylesheet">
+</head>
+<body>
+
+<section layout:fragment="main" class="postTag-list section section-write container mx-auto">
+    <div class="box">
+        <article class="post-box">
+            <a th:href="@{|/post/list|}" class="float-right text-link">
+                전체보기
+                <i class="fa-solid fa-angle-right"></i>
+            </a>
+
+            <h1 class="font-bold text-lg">
+                <i class="fa-solid fa-rectangle-list">
+                    <a th:href="@{|/post/tag/${tagContent}|}" class="text-link">
+                        <i class="fa-solid fa-hashtag"></i>[[${tagContent}]]
+                    </a>
+                    <span>관련 글</span>
+                </i>
+            </h1>
+                <a th:each="postTag : ${postTags}" th:href="@{|/post/${postTag.post.id}|}">
+                    <div class="box__gallery">
+                        <img src="/img/post/list.jpg" class="box__thumb">
+                        <div class="box__info">
+                        <span class="text__info">
+                           <span class="text__title" th:text="${postTag.post.subject}"></span>
+                     </span>
+                        </div>
+                    </div>
+                </a>
+        </article>
+    </div>
+</section>
+
+<!-- script -->
+<script src="/js/lightbox-plus-jquery.js"></script>
+<script src="/js/jquery.shuffle.min.js"></script>
+</body>
+</html>

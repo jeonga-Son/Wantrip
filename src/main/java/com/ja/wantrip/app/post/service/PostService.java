@@ -144,4 +144,21 @@ public class PostService {
 
         postRepository.save(post);
     }
+
+    public List<PostTag> getPostTags(Member author, String postKeywordContent) {
+        List<PostTag> postTags = postTagService.getPostTags(author, postKeywordContent);
+
+        loadForPrintDataOnPostTagList(postTags);
+
+        return postTags;
+    }
+
+    private void loadForPrintDataOnPostTagList(List<PostTag> postTags) {
+        List<Post> posts = postTags
+                .stream()
+                .map(PostTag::getPost)
+                .collect(toList());
+
+        loadForPrintData(posts);
+    }
 }

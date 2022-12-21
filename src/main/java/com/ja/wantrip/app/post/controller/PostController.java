@@ -9,6 +9,7 @@ import com.ja.wantrip.app.post.entity.Post;
 import com.ja.wantrip.app.post.form.AnswerForm;
 import com.ja.wantrip.app.post.form.PostForm;
 import com.ja.wantrip.app.post.service.PostService;
+import com.ja.wantrip.app.postTag.entity.PostTag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -121,4 +123,13 @@ public class PostController {
         return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글에 좋아요를 눌렀습니다.".formatted(post.getId()));
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/tag/{tagContent}")
+    public String tagList(Model model, @PathVariable String tagContent) {
+        List<PostTag> postTags = postService.getPostTags(rq.getMember(), tagContent);
+
+        model.addAttribute("postTags", postTags);
+
+        return "post/tagList";
+    }
 }
