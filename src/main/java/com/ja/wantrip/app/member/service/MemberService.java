@@ -94,7 +94,21 @@ public class MemberService {
         return RsData.of("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
     }
 
+    @Transactional
     private void setTempPassword(Member actor, String tempPassword) {
         actor.setPassword(passwordEncoder.encode(tempPassword));
+    }
+
+    @Transactional
+    public RsData modifyPassword(Member member, String password, String oldPassword) {
+        Optional<Member> opMember = memberRepository.findById(member.getId());
+
+        if (passwordEncoder.matches(oldPassword, opMember.get().getPassword()) == false) {
+            return RsData.of("F-1", "기존 비밀번호가 일치하지 않습니다.");
+        }
+
+        opMember.get().setPassword(passwordEncoder.encode(password));
+
+        return RsData.of("S-1", "비밀번호가 변경되었습니다.");
     }
 }

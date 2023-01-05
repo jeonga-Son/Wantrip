@@ -97,4 +97,23 @@ public class MemberController {
         return "member/profile";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/modifyPassword")
+    public String showModifyPassword() {
+        return "member/modifyPassword";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modifyPassword")
+    public String modifyPassword(String oldPassword, String password) {
+        Member member = rq.getMember();
+        RsData rsData = memberService.modifyPassword(member, password, oldPassword);
+
+        if (rsData.isFail()) {
+            return rq.historyBack(rsData.getMsg());
+        }
+
+        return Rq.redirectWithMsg("/", rsData);
+    }
+
 }
