@@ -1,11 +1,14 @@
 package com.ja.wantrip.app.member.service;
 
+import com.ja.wantrip.app.AppConfig;
 import com.ja.wantrip.app.base.dto.RsData;
 import com.ja.wantrip.app.base.exception.DataNotFoundException;
+import com.ja.wantrip.app.email.service.EmailService;
 import com.ja.wantrip.app.email.service.EmailVerificationService;
 import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.member.exception.AlreadyJoinException;
 import com.ja.wantrip.app.member.repository.MemberRepository;
+import com.ja.wantrip.app.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailVerificationService emailVerificationService;
+    private final EmailService emailService;
 
     @Transactional
     public Member join(String username, String password, String email, String nickname) {
@@ -70,5 +74,27 @@ public class MemberService {
 
     public Member getUser(String username) {
         return this.memberRepository.findByUsername(username).orElseThrow(() -> new DataNotFoundException("사용자가 없습니다."));
+    }
+
+    @Transactional
+    public RsData sendTempPasswordToEmail(Member actor) {
+        String title = "[" + AppConfig.getSiteName() + "] 임시 패스워드 발송";
+        String tempPassword = Util.getTempPassword(6);
+        String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+        body += "<a href=\"" + AppConfig.getSiteBaseUrl() + "/member/login\" target=\"_blank\">로그인 하러가기</a>";
+
+        RsData sendResultData = emailService.sendEmail(actor.getEmail(), title, body);
+
+        if (sendResultData.isFail()) {
+            return sendResultData;
+        }
+
+        setTempPassword(actor, tempPassword);
+
+        return RsData.of("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+    }
+
+    private void setTempPassword(Member actor, String tempPassword) {
+        actor.setPassword(passwordEncoder.encode(tempPassword));
     }
 }

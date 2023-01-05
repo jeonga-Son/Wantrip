@@ -1,5 +1,6 @@
 package com.ja.wantrip.app.member.controller;
 
+import com.ja.wantrip.app.base.dto.RsData;
 import com.ja.wantrip.app.base.rq.Rq;
 import com.ja.wantrip.app.member.entity.Member;
 import com.ja.wantrip.app.member.form.JoinForm;
@@ -75,7 +76,19 @@ public class MemberController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/findPassword")
     public String findPassword(String username, String email, Model model) {
-        return "member/login";
+        Member member = memberService.findByUsernameAndEmail(username, email).orElse(null);
+
+        if (member == null) {
+            return rq.historyBack("일치하는 회원이 존재하지 않습니다.");
+        }
+
+        RsData sendTempLoginPwToEmailResultData = memberService.sendTempPasswordToEmail(member);
+
+        if (sendTempLoginPwToEmailResultData.isFail()) {
+            return rq.historyBack(sendTempLoginPwToEmailResultData);
+        }
+
+        return Rq.redirectWithMsg("/member/login?username=%s".formatted(member.getUsername()), "해당 이메일로 '%s' 계정의 임시비번을 발송했습니다.".formatted(member.getUsername()));
     }
 
     @PreAuthorize("isAuthenticated()")
