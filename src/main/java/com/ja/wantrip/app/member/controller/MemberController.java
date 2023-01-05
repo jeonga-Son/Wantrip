@@ -116,4 +116,23 @@ public class MemberController {
         return Rq.redirectWithMsg("/", rsData);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/beAuthor")
+    public String showBeAuthor() {
+        return "member/beAuthor";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/beAuthor")
+    public String beAuthor(String nickname) {
+        Member member = rq.getMember();
+
+        RsData rsData = memberService.beAuthor(member, nickname);
+
+        if (rsData.isFail()) {
+            return Rq.redirectWithMsg("/member/beAuthor", rsData);
+        }
+
+        return Rq.redirectWithMsg("/", rsData);
+    }
 }

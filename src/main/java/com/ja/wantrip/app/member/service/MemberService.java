@@ -6,10 +6,16 @@ import com.ja.wantrip.app.base.exception.DataNotFoundException;
 import com.ja.wantrip.app.email.service.EmailService;
 import com.ja.wantrip.app.email.service.EmailVerificationService;
 import com.ja.wantrip.app.member.entity.Member;
+import com.ja.wantrip.app.member.entity.emum.AuthLevel;
 import com.ja.wantrip.app.member.exception.AlreadyJoinException;
 import com.ja.wantrip.app.member.repository.MemberRepository;
+import com.ja.wantrip.app.security.dto.MemberContext;
 import com.ja.wantrip.app.util.Util;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 //@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -37,6 +44,7 @@ public class MemberService {
                 .password(passwordEncoder.encode(password))
                 .email(email)
                 .nickname(nickname)
+                .authLevel(AuthLevel.NORMAL)
                 .build();
 
         memberRepository.save(member);
@@ -110,5 +118,36 @@ public class MemberService {
         opMember.get().setPassword(passwordEncoder.encode(password));
 
         return RsData.of("S-1", "비밀번호가 변경되었습니다.");
+    }
+
+    @Transactional
+    public RsData beAuthor(Member member, String nickname) {
+        Optional<Member> opMember = memberRepository.findByNickname(nickname);
+
+        if (opMember.isPresent()) {
+            return RsData.of("F-1", "해당 필명은 이미 사용중입니다.");
+        }
+
+        opMember = memberRepository.findById(member.getId());
+
+        opMember.get().setNickname(nickname);
+        forceAuthentication(opMember.get());
+
+        return RsData.of("S-1", "해당 필명으로 활동을 시작합니다.");
+    }
+
+    private void forceAuthentication(Member member) {
+        MemberContext memberContext = new MemberContext(member, member.getAuthorities());
+
+        UsernamePasswordAuthenticationToken authentication =
+                UsernamePasswordAuthenticationToken.authenticated(
+                        memberContext,
+                        member.getPassword(),
+                        memberContext.getAuthorities()
+                );
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
     }
 }
