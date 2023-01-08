@@ -1,76 +1,59 @@
 <!DOCTYPE html>
 <html layout:decorate="~{/layout/layout}">
-   <head>
-      <title>Wantrip | 프로필</title>
-   </head>
-   <body>
-      <section id="about">
-         <div class="container" layout:fragment="main">
-            <div class="row">
-               <div class="col-md-12">
-                  <br>
-                  <img class="img-responsive margin-top-45" src="/img/4.jpg" alt="me">
-               </div>
+<head>
+   <title>Wantrip | 내 프로필</title>
+   <!-- Css -->
+   <link href="/css/login.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default color-fill navbar-fixed-top"></nav>
+
+<section layout:fragment="main">
+      <!--로그인폼-->
+      <article class="hero">
+         <h2>내 프로필</h2>
+
+         <div class="flex flex-col gap-3" style="text-align:center; border:none;">
+            <div class="form-control">
+               <label class="label">
+                  <span class="label-text" style="color:black;">아이디</span>
+                  <div class="badge badge-primary" th:text="${@rq.member.username}"></div>
+               </label>
             </div>
-            <br>
-            <div class="row margin-top-45">
-               <div class="col-md-3">
-                  <h2>My story</h2>
-               </div>
-               <div class="col-md-9">
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula libero auctor dolor vulputate varius. Nunc ac nisl non felis finibus ultricies. Donec at porttitor lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin volutpat augue ex. In hac habitasse platea dictumst. Suspendisse at ante ligula. Nulla facilisis velit egestas massa imperdiet, id posuere turpis feugiat.
-                  </p>
-                  <br>
-                  <p>  
-                     Etiam at consectetur sapien, vel laoreet diam. Aliquam erat volutpat. Quisque fermentum purus ac justo fermentum vulputate eu id libero. Donec quam ipsum, malesuada nec interdum in, commodo vel nisl. Aliquam erat volutpat. Donec suscipit molestie urna, at pharetra tortor interdum eget. Ut lobortis viverra ex, quis faucibus sapien iaculis in. Suspendisse laoreet ornare justo sit amet fermentum. Pellentesque non nulla id libero pretium bibendum vel nec dolor. 
-                  </p>
-               </div>
-            </div>
-            <div class="row margin-top-45">
-               <div class="col-md-3">
-                  <h2>Services</h2>
-               </div>
-               <div class="col-md-9">
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula libero auctor dolor vulputate varius. Nunc ac nisl non felis finibus ultricies. Donec at porttitor lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin volutpat augue ex. In hac habitasse platea dictumst. Suspendisse at ante ligula. Nulla facilisis velit egestas massa imperdiet, id posuere turpis feugiat.
-                  </p>
-               </div>
-            </div>
-            <div class="row margin-top-45">
-               <div class="col-md-3">
-                  <h2>Clients</h2>
-               </div>
-               <div class="col-md-9">
-                  <div class="row">
-                     <div class="col-md-4">
-                        <ul class="list-unstyled">
-                           <li>Bugatti</li>
-                           <li>Vogue</li>
-                           <li>Class</li>
-                           <li>Hollister</li>
-                        </ul>
-                     </div>
-                     <div class="col-md-4">
-                        <ul class="list-unstyled">
-                           <li>Zara</li>
-                           <li>Coca Cola</li>
-                           <li>Ferrari</li>
-                           <li>Mercedes Benz</li>
-                        </ul>
-                     </div>
-                     <div class="col-md-4">
-                        <ul class="list-unstyled">
-                           <li>Tiger</li>
-                           <li>Capcom</li>
-                           <li>Zara Home</li>
-                           <li>Martini</li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-            </div>
+
+             <div class="form-control">
+                 <label class="label">
+                     <span class="label-text" style="color:black;">가입날짜</span>
+                 </label>
+                 <div class="badge badge-primary"
+                      th:text="${#temporals.format(@rq.member.createDate, 'yy-MM-dd HH:mm')}"></div>
+             </div>
+
+             <div class="form-control">
+                 <label class="label">
+                     <span class="label-text" style="color:black;">이메일</span>
+                 </label>
+                 <div class="badge badge-primary" th:text="${@rq.member.email}"></div>
+             </div>
+
+             <div class="form-control">
+                 <label class="label">
+                     <span class="label-text" style="color:black;">필명</span>
+                 </label>
+                 <div class="badge badge-primary"
+                      th:text="${@rq.member.nickname != null ? @rq.member.nickname : '-'}"></div>
+             </div>
+
+             <div class="grid grid-cols-2 mt-2 gap-2">
+                 <a href="/member/modifyPassword" class="btn btn-secondary btn-outline">비밀번호 변경</a>
+                 <a href="/member/beAuthor" th:unless="${@rq.hasAuthority('AUTHOR')}" class="btn btn-primary">여행작가 활동 시작</a>
+                 <a th:if="${@rq.hasAuthority('AUTHOR')}" class="btn btn-primary btn-disabled">이미 여행작가입니다.</a>
+             </div>
          </div>
-      </section>
-   </body>
+      </article>
+</section>
+
+<!-- script -->
+<script src="/js/login.js"></script>
+</body>
 </html>

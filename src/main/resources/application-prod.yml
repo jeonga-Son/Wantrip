@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://${prodDbIp}:3306/wantrip__dev__prod?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://${prodDbIp}:3306/wantrip__prod?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
     username: ${prodDbId}
     password: ${prodDbPw}
   jpa:

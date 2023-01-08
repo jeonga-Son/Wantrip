@@ -5,45 +5,63 @@
     <!-- Css -->
     <link href="/css/lightbox.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/css/post/list.css" rel="stylesheet">
+    <link href="/css/post/detail.css" rel="stylesheet">
 </head>
 <body>
 
-<section layout:fragment="main" class="post-list">
-    <a th:each="post : ${paging}" th:href="@{|/post/${post.id}|}">
-        <div class="box__gallery">
-            <img src="/img/post/list.jpg" class="box__thumb">
-            <div class="box__info">
-            <span class="text__info">
-               <span class="text__title" th:text="${post.subject}"></span>
-<!--            <span class="tag">-->
-<!--            <i class="icon-new"></i><i class="icon-file"></i>-->
-<!--            </span>-->
-         </span>
-            </div>
-        </div>
-    </a>
+<section layout:fragment="main" class="post-list section section-write container mx-auto">
+   <div class="box">
+       <h1 class="font-bold text-lg">
+           <i class="fa-solid fa-rectangle-list">
+               <span>Wantrip 게시글</span>
+           </i>
+           <a th:href="@{|/post/write|}"
+              class="btn btn-secondary  btn-outline btn-rank2" style="margin-left:20px;">
+               <span style="color:white;">글작성</span>
+           </a>
+       </h1>
 
-    <!--페이징처리 시작-->
-    <div th:if="${!paging.isEmpty()}" style="text-align:center;">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <a th:href="@{|?page=${paging.number-1}|}" class="page-link">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li class="page-item" th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                th:classappend="${page == paging.number} ? 'active'">
-                <a th:text="${page + 1}" th:href="@{|?page=${page}|}" class="page-link"></a>
-            </li>
-            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a th:href="@{|?page=${paging.number+1}|}" class="page-link">
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!--페이징처리 끝-->
+       <hr>
+
+       <article class="post-box">
+           <a th:each="post : ${paging}" th:href="@{|/post/${post.id}|}">
+               <div class="box__gallery">
+                   <img src="/img/post/list.jpg" class="box__thumb">
+                   <div class="box__info">
+                        <span class="text__info">
+                           <span class="text__title" th:text="${post.subject}"></span>
+                            <!--            <span class="tag">-->
+                            <!--            <i class="icon-new"></i><i class="icon-file"></i>-->
+                            <!--            </span>-->
+                        </span>
+                        <div style="margin-top:10px;" th:utext="${post.extra_postTagLinks}"></div>
+                   </div>
+               </div>
+           </a>
+
+           <!--페이징처리 시작-->
+           <div th:if="${!paging.isEmpty()}" style="text-align:center;">
+               <ul class="pagination justify-content-center">
+                   <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                       <a th:href="@{|?page=${paging.number-1}|}" class="page-link">
+                           <span>이전</span>
+                       </a>
+                   </li>
+                   <li class="page-item" th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                       th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                       th:classappend="${page == paging.number} ? 'active'">
+                       <a th:text="${page + 1}" th:href="@{|?page=${page}|}" class="page-link"></a>
+                   </li>
+                   <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                       <a th:href="@{|?page=${paging.number+1}|}" class="page-link">
+                           <span>다음</span>
+                       </a>
+                   </li>
+               </ul>
+           </div>
+           <!--페이징처리 끝-->
+       </article>
+   </div>
 </section>
 
 <!-- script -->

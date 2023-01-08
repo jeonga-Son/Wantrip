@@ -45,10 +45,12 @@
 
             <!---공유 버튼--->
             <div class="post-btn">
-                <a th:href="@{|/post/vote/${post.id}|}" class="vote">
-                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span>24</span></button>
+                <a th:href="@{|/post/vote/${post.id}|}">
+                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028950-15d50552-c99c-4c9d-a35c-6d8527fe5f40.png" alt="like"><span th:if="${#lists.size(post.voter) != 0}" th:text="${#lists.size(post.voter)}"></span></button>
                 </a>
-                <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
+                <a href="#">
+                    <button class="btn-rank2"><img src="https://user-images.githubusercontent.com/110369667/189028948-f31466fc-f523-46d1-b0fa-7301b2e20fdd.png" alt="share"><span>공유</span></button>
+                </a>
             </div>
 
             <!--댓글 시작---->
@@ -56,12 +58,39 @@
 
                 <p th:if="${#lists.size(post.answerList)} > 0" th:text="|${#lists.size(post.answerList)}개의 답변이 있습니다.|"></p>
 
+<!--                <ul class="coment-box" th:each="answer : ${post.answerList}">-->
+<!--                    <li class="flex-box">-->
+<!--                        <div class="user-text">-->
+<!--                            <p th:text="${answer.author.username}"></p>-->
+<!--                            <p th:text="${answer.content}"></p>-->
+<!--                            <small class="gray-text" th:text="|작성 : ${#temporals.format(answer.createDate, 'yy-MM-dd HH:mm')}"></small>-->
+<!--                        </div>-->
+<!--                        <div onclick="openToc1()" class="dropdown-btn">-->
+<!--                            <div class="drop-menu" id="more1">-->
+<!--                                <a th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}" th:href="@{|/answer/modify/${answer.id}|}">수정</a>-->
+<!--                                <a th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}" th:href="@{|/answer/delete/${answer.id}|}">삭제</a>-->
+<!--                                <a th:if="${answer.author != null and #authentication.getPrincipal().getUsername() != answer.author.username}">신고</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </ul>-->
+
+
                 <ul class="coment-box" th:each="answer : ${post.answerList}">
                     <li class="flex-box">
                         <div class="user-text">
                             <p th:text="${answer.author.username}"></p>
                             <p th:text="${answer.content}"></p>
                             <small class="gray-text" th:text="|작성 : ${#temporals.format(answer.createDate, 'yy-MM-dd HH:mm')}"></small>
+                            <a th:href="@{|/answer/modify/${answer.id}|}" >
+                                <button sec:authorize="isAuthenticated()" th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                                        style="margin:3px; width:40px; height:30px;">수정</button>
+                            </a>
+
+                            <a onclick="if (!confirm('정말로 삭제하시겠습니까?')) return false;" th:href="@{|/answer/delete/${answer.id}|}">
+                                <button sec:authorize="isAuthenticated()" th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                                        style="margin:3px; width:40px; height:30px;">삭제</button>
+                            </a>
                         </div>
                         <div onclick="openToc1()" class="dropdown-btn">
                             <div class="drop-menu" id="more1">
@@ -70,10 +99,10 @@
                         </div>
                     </li>
                 </ul>
-                <!--댓글입력 폼 시작---->
+<!--댓글입력 폼 시작---->
                 <form th:action="@{|/answer/create/${post.id}|}" method="post">
                     <div class="coment-writer">
-                        <textarea name="content" id="content" rows="4" placeholder="댓글을 입력해주세요">  </textarea>
+                        <textarea name="content" id="content" rows="4" placeholder="댓글을 입력해주세요"></textarea>
                         <div class="flex-box">
                             <div>
                                 <input type="checkbox" name="" value="" id="secret" class="">
@@ -87,6 +116,7 @@
                 </form>
             </article>
             <!--▲까지 댓글 아티클 끝!---->
+
             <div class="popularitypost-box">
 
                 <h5>인기 게시글</h5>
@@ -121,10 +151,10 @@
         </div>
         </article>
     </div>
-</section>
+    <th:block th:replace="fragment/toastEditor :: toastEditor"></th:block>
+    <!-- script -->
+    <script src="/js/post/detail.js"></script>
+</section>ㄴ
 
-
-<!-- script -->
-<script src="/js/post/detail.js"></script>
 </body>
 </html>

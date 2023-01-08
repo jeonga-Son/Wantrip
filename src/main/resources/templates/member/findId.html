@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+   <head>
+      <title>Wantrip | 로그인</title>
+      <!-- Css -->
+      <link href="/css/login.css" rel="stylesheet">
+   </head>
+   <body>
+      <nav class="navbar navbar-default color-fill navbar-fixed-top"></nav>
+
+      <script>
+                let MemberFindId__submitDone = false;
+
+                function MemberFindId__submit(form) {
+                    if (MemberFindId__submitDone) {
+                        return;
+                    }
+
+                    form.email.value = form.email.value.trim();
+
+                    if (form.email.value.length == 0) {
+                        warningModal("이메일을 입력해주세요.");
+                        form.email.focus();
+
+                        return;
+                    }
+
+                    form.submit();
+                    MemberFindId__submitDone = true;
+                }
+            </script>
+
+      <section>
+         <form th:action method="POST" onsubmit="MemberFindId__submit(this); return false;" layout:fragment="main" class="container">
+            <!--로그인폼-->
+            <article class="hero">
+               <h2>아이디 찾기</h2>
+               <h3>이메일로 아이디를 찾아보세요!</h3>
+               <div class="login-wrap">
+                  <div class="login-html">
+                     <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">회원</label>
+                     <div class="login-form">
+                        <div class="sign-in-htm">
+                           <div class="group">
+                              <label for="mail" class="label">이메일</label>
+                              <input autofocus name="email" placeholder="이메일을 입력해주세요."
+                                     id="mail" type="email" class="input" data-type="email">
+                           </div>
+
+                           <div class="group">
+                              <button type="submit" class="button">아이디 찾기</button>
+                           </div>
+
+                           <div class="hr"></div>
+                           <div class="foot-lnk">
+                              <span style="margin:10px;">
+                                 <a th:href="@{|/member/findPassword|}">비밀번호 찾기</a>
+                              </span>
+                           </div>
+
+                           <div class="foot-lnk">
+                              <a href="/member/join">회원이 아닌가요?</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </article>
+            <!--로그인폼 end-->
+         </form>
+      </section>
+
+      <!-- script -->
+      <script src="/js/login.js"></script>
+   </body>
+</html>
