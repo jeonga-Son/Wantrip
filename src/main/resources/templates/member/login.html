@@ -25,9 +25,9 @@
                         return;
                     }
 
-                    form.content.value = form.content.value.trim();
+                    form.password.value = form.password.value.trim();
 
-                    if (form.content.value.length == 0) {
+                    if (form.password.value.length == 0) {
                         warningModal("비밀번호를 입력해주세요.");
                         form.content.focus();
 
@@ -40,7 +40,7 @@
             </script>
 
       <section>
-         <form th:action method="POST" layout:fragment="main" class="container">
+         <form th:action method="POST" onsubmit="MemberLogin__submit(this); return false;" layout:fragment="main" class="container">
             <!--로그인폼-->
             <article class="hero">
                <h2>login</h2>
@@ -70,7 +70,13 @@
 
                            <div class="hr"></div>
                            <div class="foot-lnk">
-                              <a href="#forgot">아이디/비밀번호를 잊어버렸나요?</a>
+                              <span style="margin:10px;">
+                                 <a th:href="@{|/member/findId|}">계정 찾기</a>
+                              </span>
+                              |
+                              <span style="margin:10px;">
+                                 <a th:href="@{|/member/findPassword|}">비밀번호 찾기</a>
+                              </span>
                            </div>
 
                            <div class="foot-lnk">

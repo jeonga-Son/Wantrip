@@ -28,7 +28,4 @@ public class Answer extends BaseEntity {
 
     @ManyToOne
     private Post post;
-
-    @ManyToMany
-    Set<Member> voter;
 }

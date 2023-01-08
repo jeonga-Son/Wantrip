@@ -138,9 +138,27 @@ public class PostService {
                 .orElseThrow(() -> new DataNotFoundException("%d번 글을 찾을 수 없습니다.".formatted(id)));
     }
 
+    @Transactional
     public void vote(Post post, Member member) {
         post.getVoter().add(member);
 
         postRepository.save(post);
+    }
+
+    public List<PostTag> getPostTags(Member author, String postKeywordContent) {
+        List<PostTag> postTags = postTagService.getPostTags(author, postKeywordContent);
+
+        loadForPrintDataOnPostTagList(postTags);
+
+        return postTags;
+    }
+
+    private void loadForPrintDataOnPostTagList(List<PostTag> postTags) {
+        List<Post> posts = postTags
+                .stream()
+                .map(PostTag::getPost)
+                .collect(toList());
+
+        loadForPrintData(posts);
     }
 }

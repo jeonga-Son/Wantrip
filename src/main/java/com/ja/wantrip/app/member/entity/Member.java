@@ -3,6 +3,7 @@ package com.ja.wantrip.app.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ja.wantrip.app.base.entity.BaseEntity;
+import com.ja.wantrip.app.member.entity.emum.AuthLevel;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,9 @@ public class Member extends BaseEntity {
 
     private String nickname;
 
+    @Convert(converter = AuthLevel.Converter.class)
+    private AuthLevel authLevel;
+
     public String getName() {
         if (nickname != null) {
             return nickname;
@@ -57,6 +62,21 @@ public class Member extends BaseEntity {
         authorities.add(new SimpleGrantedAuthority("MEMBER"));
 
         // 닉네임을 가지고 있다면 작가의 권한을 가진다.
+        if (StringUtils.hasText(nickname)) {
+            authorities.add(new SimpleGrantedAuthority("AUTHOR"));
+        }
+
+        return authorities;
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("MEMBER"));
+
+        if (getAuthLevel() == AuthLevel.ADMIN) {
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        }
+
         if (StringUtils.hasText(nickname)) {
             authorities.add(new SimpleGrantedAuthority("AUTHOR"));
         }
